@@ -125,6 +125,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<image>
+						<name>
+							jao/26bookmarker-api
+						</name>
+					</image>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -133,6 +138,31 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<!-- artifactId>versions-maven-plugin</! artifactId-->
+				<version>3.2.1</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:21-jre</image>
+					</from>
+					<to>
+						<image>jao/26bookmarker-api</image>
+						<tags>
+							<tag>latest</tag>
+							<tag>0.0.1</tag>
+						</tags>
+					</to>
+					<container>
+						<ports>
+							<port>8080</port>
+						</ports>
+					</container>
+				</configuration>
+			</plugin>
+		      
 		</plugins>
 	</build>
 

@@ -14,15 +14,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookmarkService {
     private final BookmarkRepository repository;
+    private final BookmarkMapper mapper;
     
     @Transactional(readOnly = true)
-    public BookmarkDTO getBookmarks(Integer page) {
+    public BookmarksDTO getBookmarks(Integer page) {
     	int pageNo = page < 1 ? 0 : page -1 ;
     	Pageable pageable = PageRequest.of(pageNo, 5, Sort.Direction.DESC, "createdAt");
 
-        //return repository.findAll();
-    	
-        return new BookmarkDTO(repository.findAll(pageable));
+        Page <BookmarkDTO> bookmarkPage = repository.findAll(pageable).map(mapper::toDTO);
+    	//Page <BookmarkDTO> bookmarkPage = repository.findAll(pageable).map(bookmark -> mapper.toDTO(bookmark) )
+        return new BookmarksDTO(bookmarkPage);
 
     }
 }
