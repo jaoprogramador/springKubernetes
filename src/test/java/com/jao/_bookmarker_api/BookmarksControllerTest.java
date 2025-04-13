@@ -86,8 +86,8 @@ public class BookmarksControllerTest {
 	//Pruebas parametrizadas
 	@ParameterizedTest
 	@CsvSource({
-		"1,15,2,1,true,false,true,false",
-		"2,15,2,2,false,true,false,false"
+		"1,15,3,1,true,false,true,false",
+		"2,15,3,2,false,true,false,false"
 	})
 	void shouldGetBookmarks(int numPage, int totalElements, int totalPages, int currentPage, 
 			boolean isFirst,boolean isLast,boolean hasNext,boolean hasPrevious   ) throws Exception  {
