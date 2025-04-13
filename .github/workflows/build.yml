@@ -2,16 +2,9 @@ name: Build
 
 on:
   push:
-    paths:
-      - "26bookmarker-api/**"
     branches: [ "main" ]
   pull_request:
-    paths:
-      - "26bookmarker-api/**"
-    types:
-      - opened
-      - synchronize
-      - reopened
+    branches: [ "main" ]
 
 jobs:
   build-26bookmarker-api:
