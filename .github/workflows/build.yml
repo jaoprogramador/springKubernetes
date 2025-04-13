@@ -7,12 +7,10 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build-26bookmarker-api:
-    name: Build 26bookmarker-api
+  build:
+    name: Build springKubernetes
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./26bookmarker-api
+
     steps:
       - uses: actions/checkout@v4
 
@@ -30,5 +28,5 @@ jobs:
         name: Build and Publish Docker Image
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/26bookmarker-api
-          docker push ${{ secrets.DOCKER_USERNAME }}/26bookmarker-api
+          ./mvnw spring-boot:build-image -Dspring-boot.build-image.imageName=${{ secrets.DOCKER_USERNAME }}/springkubernetes
+          docker push ${{ secrets.DOCKER_USERNAME }}/springkubernetes
