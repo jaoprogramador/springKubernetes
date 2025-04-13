@@ -143,10 +143,10 @@
 				<groupId>com.google.cloud.tools</groupId>
 				<artifactId>jib-maven-plugin</artifactId>
 				<!-- artifactId>versions-maven-plugin</! artifactId-->
-				<version>3.2.1</version>
+				<version>3.4.0</version>
 				<configuration>
 					<from>
-						<image>eclipse-temurin:21-jdk</image>
+						<image>eclipse-temurin:21-jdk-jammy</image>
 						<platforms>
 					      <platform>
 					        <architecture>amd64</architecture>
