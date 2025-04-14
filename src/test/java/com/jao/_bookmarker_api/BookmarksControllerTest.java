@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.testcontainers.shaded.org.hamcrest.CoreMatchers;
 
 import com.jao._bookmarker_api.domain.Bookmark;
 import com.jao._bookmarker_api.domain.BookmarkRepository;
@@ -90,22 +86,40 @@ public class BookmarksControllerTest {
 	//Pruebas parametrizadas
 	@ParameterizedTest
 	@CsvSource({
-		"1,15,2,1,true,false,true,false",
-		"2,15,2,2,false,true,false,false"
+		"1,15,3,1,true,false,true,false",
+		"2,15,3,2,false,true,false,false"
 	})
 	void shouldGetBookmarks(int numPage, int totalElements, int totalPages, int currentPage, 
 			boolean isFirst,boolean isLast,boolean hasNext,boolean hasPrevious   ) throws Exception  {
-		mvc.perform(get("/api/bookmarks"))
-			.andExpect(status().isOk())//PRUEBA LA LLAMADA AL CONTROLLER Y QUE DEVUELVA OK
-			.andExpect( (ResultMatcher) jsonPath("$.totalElements", CoreMatchers.equalTo(totalElements))) //PRUEBA QUE TIENE 15 ELEMENTOS
-			.andExpect( (ResultMatcher) jsonPath("$.totalPages", CoreMatchers.equalTo(totalPages))) //PRUEBA QUE TIENE 2 pages
-			.andExpect( (ResultMatcher) jsonPath("$.currentPage", CoreMatchers.equalTo(currentPage))) //PRUEBA QUE TIENE 1 current
-			.andExpect( (ResultMatcher) jsonPath("$.isFirst", CoreMatchers.equalTo(isFirst))) //PRUEBA QUE isFirst
-			.andExpect( (ResultMatcher) jsonPath("$.isLast", CoreMatchers.equalTo(isLast))) //PRUEBA QUE isLast
-			.andExpect( (ResultMatcher) jsonPath("$.hasNext", CoreMatchers.equalTo(hasNext))) //PRUEBA QUE hasNext
-			.andExpect( (ResultMatcher) jsonPath("$.hasPrevious", CoreMatchers.equalTo(hasPrevious))) //PRUEBA QUE hasPrevious
-			
-			;
+		/*
+		 * mvc.perform(get("/api/bookmarks")) .andExpect(status().isOk())//PRUEBA LA
+		 * LLAMADA AL CONTROLLER Y QUE DEVUELVA OK .andExpect( (ResultMatcher)
+		 * jsonPath("$.totalElements", CoreMatchers.equalTo(totalElements))) //PRUEBA
+		 * QUE TIENE 15 ELEMENTOS .andExpect( (ResultMatcher) jsonPath("$.totalPages",
+		 * CoreMatchers.equalTo(totalPages))) //PRUEBA QUE TIENE 2 pages .andExpect(
+		 * (ResultMatcher) jsonPath("$.currentPage", CoreMatchers.equalTo(currentPage)))
+		 * //PRUEBA QUE TIENE 1 current .andExpect( (ResultMatcher)
+		 * jsonPath("$.isFirst", CoreMatchers.equalTo(isFirst))) //PRUEBA QUE isFirst
+		 * .andExpect( (ResultMatcher) jsonPath("$.isLast",
+		 * CoreMatchers.equalTo(isLast))) //PRUEBA QUE isLast .andExpect(
+		 * (ResultMatcher) jsonPath("$.hasNext", CoreMatchers.equalTo(hasNext)))
+		 * //PRUEBA QUE hasNext .andExpect( (ResultMatcher) jsonPath("$.hasPrevious",
+		 * CoreMatchers.equalTo(hasPrevious))) //PRUEBA QUE hasPrevious
+		 * 
+		 * ;
+		 */
+		// Spring Data empieza en 0
+	    int pageIndex = numPage - 1;
+
+	    mvc.perform(get("/api/bookmarks?page=" + pageIndex))
+	        .andExpect(status().isOk())
+	        .andExpect(jsonPath("$.totalElements").value(totalElements))
+	        .andExpect(jsonPath("$.totalPages").value(totalPages))
+	        .andExpect(jsonPath("$.currentPage").value(currentPage))
+	        .andExpect(jsonPath("$.isFirst").value(isFirst))
+	        .andExpect(jsonPath("$.isLast").value(isLast))
+	        .andExpect(jsonPath("$.hasNext").value(hasNext))
+	        .andExpect(jsonPath("$.hasPrevious").value(hasPrevious));
 	}
 
 }
