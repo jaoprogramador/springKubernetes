@@ -9,6 +9,15 @@
 # Dockerizing
 # Actions
 
+
+# INICIAR proyecto
+# =================
+# refresh y clean proyect
+# ejecutamos el GOAL CLEAN BUILD que genera el jar
+# arrancamos DCOCKER-DESCKTOP
+# arrancamos el contenedor
+# docker run -p 8080:8080  jao/26bookmarker-api
+
 # Useful commands:DOCKER
 # ===================
 # crear la imagen Docker con Spring Boot
@@ -20,6 +29,24 @@
 # ejecutar la imagen Docker que has creado (ya sea con spring-boot:build-image o jib:dockerBuild):
 
 	docker run -p 8080:8080  jao/26bookmarker-api
+	
+## How to run?
+
+```shell
+$ git clone https://github.com/jaoprogramador/springKubernetes.git
+$ cd springKubernetes
+$ ./run.sh start
+$ ./run.sh stop
+
+$ ./run.sh start_infra
+$ ./run.sh stop_infra
+```
+
+* To start only dependent services
+
+```shell
+$ ./run.sh start_infra
+$ ./run.sh stop_infra
+```
 
 
-Tengo este pom y me gustaría ejecutar estos comandos para crear en docjker una imagen de la app pero no me funciona

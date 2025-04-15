@@ -7,10 +7,17 @@ import org.springframework.data.jpa.repository.Query;;
 
 public interface BookmarkRepository extends JpaRepository<Bookmark, Long> {
 
-	//@Query("select new com.jao._bookmarker_api.domain.BookMarkDTO(b.id, b.title, b.url, b.com.jao._bookmarker_api.domain) from Bookmark b")
-	//@Query("SELECT new com.jao._bookmarker_api.domain.BookMarkDTO(b.id, b.title, b.url) FROM Bookmark b")
+	
 	@Query("SELECT new com.jao._bookmarker_api.domain.BookmarkDTO(b.id, b.title, b.url, b.createdAt) FROM Bookmark b")
 	Page<BookmarkDTO> findBookmarks(Pageable pageable);
+	
+	@Query("""
+	SELECT new com.jao._bookmarker_api.domain.BookmarkDTO(b.id, b.title, b.url, b.createdAt) FROM Bookmark b
+	where lower(b.title) like lower(concat('%', :query, '%'))
+	""")
+	Page<BookmarkDTO> searchBookmarks(String query, Pageable pageable);
+	
+	Page<BookmarkVM> findByTitleContainsIgnoreCase(String query, Pageable pageable);
 
 
 }
