@@ -30,7 +30,7 @@
 
 	docker run -p 8080:8080  jao/26bookmarker-api
 	
-## How to run?
+## How to run?: Nos clonamos el proyecto copiamos docker-compose.yml ,docker-compose-app.yml y run.sh en el workspace donde esté la aplicacion(NO DENTRO DE ELLA)
 
 ```shell
 $ git clone https://github.com/jaoprogramador/springKubernetes.git
