@@ -49,4 +49,47 @@ $ ./run.sh start_infra
 $ ./run.sh stop_infra
 ```
 
+## API: http://localhost:8080/api/bookmarks
+## http://localhost:3000
+
+## COMANDOS Docker
+## ===============
+## CONSTRUIR UNA IMAGEN DOCKER
+## 	docker build -t springjao .
+## VER TODAS LAS REDES DISPONIBLES
+## 	docker network ls
+## LISTAR LOS CONTENEDORES , ESTADO, PUERTOS...
+## 	docker ps
+## ARRANCAR Y PARAR CONTENEDORES
+## 	docker start mysqldb
+## 	docker start springboot
+## docker stop mysqldb
+## ELIMINAR LA RED DENOMINADA MY-NETWORK
+## 	docker network rm MY-NETWORK
+## CREAR IMAGEN DE MYSQL, EL CONTENEDOR Y LA BD
+## ====================================
+## CREAR IMAGEN DE MYSQL
+## 	docker pull mysql
+## EJECUTAR EL CONTENEDOR
+## 	docker run -d --name mysqldb --network api_network_JAO -p 3305:3306 -e MYSQL_ROOT_PASSWORD=jaoprogramador1234 mysql:latest
+## ACCEDER AL CONTENEDOR DE BD POR USU Y PASS
+## 	docker exec -it mysqldb mysql -u root -p
+## MOSTRAR LAS BD
+## 	show databases
+## CREAR LA BD 
+## 	create database dankdb;
+## EJECUTA EL CONTENEDOR springboot EN LA RED api_network_JAO EN EL PUERTO 8080
+## 	docker run -d --name springboot --network api_network_JAO -p 8080:8080 springjao:latest
+	
+## ========================================
+## CUANDO QUIERES HACER CAMBIOS EN LA APP y DEPLOYAR EN CONTAINER DE DOCKER
+## Reconstruye tu JAR
+## LANZA L GOAL CLEANINSTALL SIN TEST
+## Reconstruye la imagen Docker
+## docker build -t springjao .
+## Elimina el contenedor anterior de tu app (si existe)
+## docker rm -f springboot
+## Lanza el contenedor con la red compartida
+## docker run -d --name springboot --network api_network_JAO -p 8080:8080 springjao:latest
+
 

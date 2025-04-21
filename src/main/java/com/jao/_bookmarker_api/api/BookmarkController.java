@@ -16,7 +16,9 @@ import com.jao._bookmarker_api.domain.CreateBookmarkRequest;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/bookmarks")
 @RequiredArgsConstructor
@@ -28,18 +30,22 @@ public class BookmarkController {
     //http://localhost:8080/api/bookmarks
     @GetMapping  
     public BookmarksDTO getBookMarks(@RequestParam(name="page", defaultValue = "1") Integer page,
-    		@RequestParam(name="query", defaultValue = "") String query	) {
+    		@RequestParam( defaultValue = "") String query	) {
+    		//@RequestParam(name="query", defaultValue = "") String query	) {
     	
     	if(query == null || query.trim().length()==0) {
+    		log.info("BookmarkController::::getBookMarks:::ini {page}",page );
     			return bookmarkService.getBookmarks(page);
     	}
-    	
+    	log.info("BookmarkController::::searchBookmarks:::ini {query}", query);
     	return bookmarkService.searchBookmarks(query,page);
     }
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookmarkDTO createBookmark(@RequestBody @Valid CreateBookmarkRequest request) {
+    	log.info("BookmarkController::::createBookmark:::ini {}", request.getTitle());
+
         return bookmarkService.createBookmark(request);
     }
 }

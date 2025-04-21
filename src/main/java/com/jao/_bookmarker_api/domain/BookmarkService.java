@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional()
 @RequiredArgsConstructor
 public class BookmarkService {
     private final BookmarkRepository repository;
@@ -34,12 +34,12 @@ public class BookmarkService {
 	public BookmarksDTO searchBookmarks(String query, Integer page) {
     	int pageNo = page < 1 ? 0 : page -1 ;
     	Pageable pageable = PageRequest.of(pageNo, 5, Sort.Direction.DESC, "createdAt");
-    	Page <BookmarkDTO> bookmarkPage = repository.searchBookmarks(query,pageable);
-    	Page <BookmarkVM> bookmarkPageVM = repository.findByTitleContainsIgnoreCase(query, pageable);
+    	//Page <BookmarkDTO> bookmarkPage = repository.searchBookmarks(query,pageable);
+    	Page <BookmarkDTO> bookmarkPage = repository.findByTitleContainsIgnoreCase(query, pageable);
         return new BookmarksDTO(bookmarkPage);
 
 	}
-
+    @Transactional()
     public BookmarkDTO createBookmark(CreateBookmarkRequest request) {
         Bookmark bookmark = new Bookmark(null, request.getTitle(), request.getUrl(), Instant.now());
         Bookmark savedBookmark = repository.save(bookmark);
